@@ -5,7 +5,10 @@ void main(){
   tree.insert(30);
   tree.insert(40);
   tree.insert(50);
-  print(tree.contains(60));
+  tree.insert(60);
+  print(tree.contains(50));
+  tree.remove(50);
+  print(tree.contains(50));
 }
 class Node{
   int data;
@@ -54,5 +57,57 @@ class BinarySearchTree {
       }
     }
     return false;
+  }
+
+  void removeHelper(int data,Node? current,Node? parent){
+    while(current != null){
+      if(data < current.data){
+        parent = current;
+        current = current.left;
+      }else if(data > current.data){
+        parent =current;
+        current = current.right;
+      }else{
+        if(current.left != null && current.right != null){
+          current.data=getMinValue(current.right);
+          removeHelper(current.data, current.right, current);
+        }else{
+          if(parent == null){
+            if(current.right == null){
+              root =current.left;
+            }else{
+              root=current.right;
+            }
+          }else{
+            if(parent.left == current){
+              if(current.right == null){
+                parent.left=current.left;
+              }else{
+                parent.left = current.right;
+              }
+            }else{
+              if(current.right == null){
+                parent.right = current.left;
+              }else{
+                 parent.right = current.right;
+              }
+            }
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  void remove(int data){
+    removeHelper(data, root, null);
+  }
+
+  int getMinValue(Node? current){
+    if(current!.left == null){
+      return current.data;
+    }else{
+      return getMinValue(current.left);
+    }
   }
 }
