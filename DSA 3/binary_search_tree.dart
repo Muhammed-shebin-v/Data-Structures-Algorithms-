@@ -1,14 +1,11 @@
 void main(){
   BinarySearchTree tree=BinarySearchTree();
   tree.insert(10);
-  tree.insert(20);
-  tree.insert(30);
-  tree.insert(40);
-  tree.insert(50);
-  tree.insert(60);
-  print(tree.contains(50));
-  tree.remove(50);
-  print(tree.contains(50));
+  tree.insert(8);
+  tree.insert(11);
+  tree.insert(4);
+  tree.insert(9);
+  print(tree.findClosest(6));
 }
 class Node{
   int data;
@@ -109,5 +106,59 @@ class BinarySearchTree {
     }else{
       return getMinValue(current.left);
     }
+  }
+
+  void inorder(){
+    inorderHelper(root);
+  }
+
+  void inorderHelper(Node? node){
+    if(node != null){
+      inorderHelper(node.left);
+      print(node.data);
+      inorderHelper(node.right);
+    }
+  }
+
+  void preorder(){
+    preorderHelper(root);
+  }
+
+  void preorderHelper(Node? node){
+    if(node != null){
+      print(node.data);
+      preorderHelper(node.left);
+      preorderHelper(node.right);
+    }
+  }
+
+  void postorder(){
+    postorderHelper(root);
+  }
+
+  void postorderHelper(Node? node){
+    if(node != null){
+      postorderHelper(node.left);
+      postorderHelper(node.right);
+      print(node.data);
+    }
+  }
+
+  int findClosest(int target){
+    Node? current =root;
+    int closest=current!.data;
+    while(current != null){
+      if((target - closest).abs() > (target - current.data).abs()){
+        closest= current.data;
+      }
+      if(target<current.data){
+        current=current.left;
+      }else if(target > current.data){
+        current = current.right;
+      }else{
+        break;
+      }
+    }
+    return closest;
   }
 }
