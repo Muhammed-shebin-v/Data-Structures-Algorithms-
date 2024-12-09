@@ -1,3 +1,4 @@
+// Main Function
 void main(){
   BinarySearchTree tree=BinarySearchTree();
   tree.insert(10);
@@ -5,13 +6,25 @@ void main(){
   tree.insert(11);
   tree.insert(4);
   tree.insert(9);
-  print(tree.findClosest(6));
+  tree.remove(11);
+  tree.inorder();
+  print('***************');
+  tree.preorder();
+  print('***************');
+  tree.postorder();
+  print('sum');
+  print(tree.sum(tree.root));
 }
+
+
+// Binary Node Creation
 class Node{
   int data;
   Node? left,right;
   Node(this.data);
 }
+
+
 class BinarySearchTree {
   Node? root;
 
@@ -21,23 +34,18 @@ class BinarySearchTree {
       root = Node(data);
       return;
     }
-    
     while(true){
       if(data < current!.data){
         if(current.left== null){
           current.left=Node(data);
           break;
-        }else{
-            current=current.left;
-        }
+        }else current=current.left;
       }
       else {
         if(current.right==null){
           current.right=Node(data);
           break;
-        }else{
-          current=current.right;
-        }
+        }else current=current.right;
       }
     }
   }
@@ -56,6 +64,10 @@ class BinarySearchTree {
     return false;
   }
 
+
+  void remove(int data){
+    removeHelper(data, root, null);
+  }
   void removeHelper(int data,Node? current,Node? parent){
     while(current != null){
       if(data < current.data){
@@ -95,11 +107,6 @@ class BinarySearchTree {
       }
     }
   }
-
-  void remove(int data){
-    removeHelper(data, root, null);
-  }
-
   int getMinValue(Node? current){
     if(current!.left == null){
       return current.data;
@@ -108,22 +115,10 @@ class BinarySearchTree {
     }
   }
 
-  void inorder(){
-    inorderHelper(root);
-  }
-
-  void inorderHelper(Node? node){
-    if(node != null){
-      inorderHelper(node.left);
-      print(node.data);
-      inorderHelper(node.right);
-    }
-  }
 
   void preorder(){
     preorderHelper(root);
   }
-
   void preorderHelper(Node? node){
     if(node != null){
       print(node.data);
@@ -132,10 +127,22 @@ class BinarySearchTree {
     }
   }
 
+
+  void inorder(){
+    inorderHelper(root);
+  }
+  void inorderHelper(Node? node){
+    if(node != null){
+      inorderHelper(node.left);
+      print(node.data);
+      inorderHelper(node.right);
+    }
+  }
+
+
   void postorder(){
     postorderHelper(root);
   }
-
   void postorderHelper(Node? node){
     if(node != null){
       postorderHelper(node.left);
@@ -143,6 +150,7 @@ class BinarySearchTree {
       print(node.data);
     }
   }
+
 
   int findClosest(int target){
     Node? current =root;
@@ -160,5 +168,10 @@ class BinarySearchTree {
       }
     }
     return closest;
+  }
+
+  sum(Node? node) {
+    if (node == null) return 0;
+    return sum(node.left) + sum(node.right) + node.data;
   }
 }
