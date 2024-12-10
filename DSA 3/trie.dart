@@ -56,7 +56,6 @@ class Trie {
       print("val:$prefix");
       result.add(prefix);
     }
-
     for (var val in node.children.keys) {
       collectWords(node.children[val]!, prefix + val, result);
     }

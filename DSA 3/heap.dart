@@ -13,8 +13,6 @@ class Heap {
   void printHeap() {
     print(heap);
   }
-
-
 }
 
 class MaxHeap extends Heap {
@@ -81,5 +79,4 @@ void main() {
   obj.insert(7);
   obj.insert(12);
   obj.printHeap();
-
 }
